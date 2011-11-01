@@ -1,0 +1,6 @@
+[submodule "vendor/deck.js"]
+	path = vendor/deck.js
+	url = https://github.com/imakewebthings/deck.js.git
+[submodule "vendor/codemirror"]
+	path = vendor/codemirror
+	url = http://marijnhaverbeke.nl/git/codemirror2
