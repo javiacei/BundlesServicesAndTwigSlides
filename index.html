@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+	<title>Symfony2: Bundles, servicios y extensiones de Twig</title>
+
+        <meta name="author" content="Francisco Javier Aceituno <fco.javier.aceituno@gmail.com>">
+
+        <!-- Core and extension CSS files -->
+        <link rel="stylesheet" href="vendor/deck.js/core/deck.core.css">
+        <link rel="stylesheet" href="vendor/deck.js/extensions/goto/deck.goto.css">
+        <link rel="stylesheet" href="vendor/deck.js/extensions/menu/deck.menu.css">
+        <link rel="stylesheet" href="vendor/deck.js/extensions/navigation/deck.navigation.css">
+        <link rel="stylesheet" href="vendor/deck.js/extensions/status/deck.status.css">
+        <link rel="stylesheet" href="vendor/deck.js/extensions/hash/deck.hash.css">
+
+        <!-- Theme CSS files (menu swaps these out) -->
+        <link rel="stylesheet" id="style-theme-link" href="vendor/deck.js/themes/style/web-2.0.css">
+        <link rel="stylesheet" id="transition-theme-link" href="vendor/deck.js/themes/transition/horizontal-slide.css">
+
+        <!-- Custom CSS just for this page -->
+        <link rel="stylesheet" href="symfony2.css">
+
+        <script src="vendor/deck.js/modernizr.custom.js"></script>
+
+        <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="vendor/deck.js/jquery-1.6.4.min.js"><\/script>')</script>
+
+        <!-- Deck Core and extensions -->
+        <script src="vendor/deck.js/core/deck.core.js"></script>
+        <script src="vendor/deck.js/extensions/menu/deck.menu.js"></script>
+        <script src="vendor/deck.js/extensions/goto/deck.goto.js"></script>
+        <script src="vendor/deck.js/extensions/status/deck.status.js"></script>
+        <script src="vendor/deck.js/extensions/navigation/deck.navigation.js"></script>
+        <script src="vendor/deck.js/extensions/hash/deck.hash.js"></script>
+
+        <!-- Specific to this page -->
+        <script type="text/javascript">
+            $(function() {
+                // Deck initialization
+                $.deck('.slide');
+            });
+        </script>
+    </head>
+    <body class="deck-container">
+        <section class="slide" id="titulo">
+            <h1>Symfony2:<br>Bundles, servicios y extensiones de Twig.</h1>
+        </section>
+
+        <section class="slide" id="bundle">
+            <h2>¿Qué es un bundle?</h2>
+            <ul>
+                <li class="slide">
+                    Un bundle es un <strong>proyecto</strong>
+		</li>
+                <br>
+		<li class="slide">
+                    Un bundle es una <strong>aplicación</strong>
+		</li>
+                <br>
+		<li class="slide">
+                    Un bundle es un <strong>módulo</strong>
+		</li>
+                <br>
+                <blockquote class="slide" cite="http://symfony.com/doc/current/quick_tour/the_architecture.html">
+                    <p>En Symfony2 <strong>todo</strong> es un bundle</p>
+                    <p><cite>Fabien Potencier</cite></p>
+                </blockquote>
+            </ul>
+        </section>
+
+        <section class="slide" id="cuando_crear_bundles">
+            <h1>pero...<br>¿Cómo y cuándo creamos un bundle?</h1>
+        </section>
+
+        <section class="slide" id="a_picar">
+            <h1>Muy fácil</h1>
+            <section class="slide" id="">
+                <img src="http://media.tumblr.com/tumblr_lj3blngpL71qal056.gif" style="margin-top: 15%;">
+            </section>
+
+        </section>
+
+        <section class="slide" id="bundle_demo_codigo">
+            <h2>Tags de github</h2>
+            <br>
+            <ol>
+                <li>
+                    <a href="https://github.com/javiacei/BundlesServicesAndTwig/tree/bundle.1" target="_blanck">Bundle versión 1</a>
+		</li>
+                <br>
+                <li>
+                    <a href="https://github.com/javiacei/BundlesServicesAndTwig/tree/bundle.2" target="_blanck">Bundle versión 2</a>
+		</li>
+                <br>
+                <li>
+                    <a href="https://github.com/javiacei/BundlesServicesAndTwig/tree/bundle.3" target="_blanck">Bundle versión 3</a>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="fin_bundle">
+            <h1>perfecto!<br>Ya tenemos nuestro bundle</h1>
+        </section>
+
+        <section class="slide" id="servicio_intro">
+            <h2>Pero... ¿Existe algo que echas de menos?</h2>
+            <ol>
+                <li class="slide">
+                    <p>Me gustaría no tener que hacer el <strong>use</strong> de la clase de otro bundle</p>
+                    <pre>
+                        <code>
+use JaviAcei\PaginatorBundle\Model\Paginator;
+                        </code>
+                    </pre>
+		</li>
+                <br>
+		<li class="slide">
+                    <p>También me gustaría no tener que instanciar la clase y pasandole el objeto Request como parámetro</p>
+                    <pre>
+                        <code>
+$request    = $this->getRequest();
+$paginator  = new Paginator($request);
+                        </code>
+                    </pre>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="servicio">
+            <h1>La solución a nuestros problemas es un <strong>Servicio</strong></h1>
+        </section>
+
+        <section class="slide" id="servicio_expl">
+            <h2>¿Qué es un servicio?</h2>
+
+            <blockquote class="slide" cite="http://symfony.com/doc/current/glossary.html#term-service">
+                <p>Un servicio es cualquier objeto PHP que realiza algún tipo de trabajo <strong>global</strong></p>
+                <p><cite>Fabien Potencier</cite></p>
+            </blockquote>
+
+            <h2 class="slide">y ... ¿Cómo se crea un servicio?</h2>
+            <h3 class="slide">Utilizando el contenedor de inyección de dependencias</h3>
+        </section>
+
+        <section class="slide" id="contenedor_di">
+            <h2>Necesitamos el Contenedor de Inyección de Dependencias para:</h2>
+            <ol>
+                <li class="slide">
+                    <p>Describir los objetos y sus dependencias.</p>
+		</li>
+                <br>
+		<li class="slide">
+                    <p>Inicializar y configurar los objetos bajo demanda.</p>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="servicio_demo_codigo">
+            <h2>Tags de github</h2>
+            <br>
+            <ol>
+                <li>
+                    <a href="https://github.com/javiacei/BundlesServicesAndTwig/tree/service.1" target="_blanck">Servicios versión 1</a>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="configuración_bundle">
+            <h1>Y si quiero configurar el bundle desde el config.yml<br><br>¿Qué debo hacer?</h1>
+        </section>
+
+        <section class="slide" id="servicio_plus_demo_codigo">
+            <h2>Tags de github</h2>
+            <br>
+            <ol>
+                <li>
+                    <a href="https://github.com/javiacei/BundlesServicesAndTwig/tree/service.2" target="_blanck">Servicios versión 2</a>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="twig_intro">
+            <h1>muy bien, todo muy bonito, pero...<br><br>¿Qué pasa con la vista?</h1>
+        </section>
+
+        <section class="slide" id="funcion_twig">
+            <h1>Vamos a crear una <b>función</b> Twig</h1>
+        </section>
+
+        <section class="slide" id="funcion_twig_expl">
+            <h2>Funciones Twig</h2>
+            <p>Una función twig es una función o método de PHP que puede ser invocado desde los templates</p>
+            <br>
+            <h2 class="slide">y ... ¿Como se crea una función twig?</h2>
+            <ol>
+                <li class="slide">
+                    <p>Creando una clase que extienda de la clase abstracta \Twig_Extension.</p>
+		</li>
+                <br>
+		<li class="slide">
+                    <p>Registrando la extensión en el contenedor de inyección de dependencias.</p>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="servicio_plus_demo_codigo">
+            <h2>Tags de github</h2>
+            <br>
+            <ol>
+                <li>
+                    <a href="https://github.com/javiacei/BundlesServicesAndTwig/tree/twig.1" target="_blanck">Twig versión 1</a>
+		</li>
+            </ol>
+        </section>
+
+        <section class="slide" id="informacion">
+            <h2>Francisco Javier Aceituno</h2>
+            <p><strong>Twitter</strong> <a href="https://twitter.com/#!/javiacei">@javiacei</a></p>
+            <p><strong>Email</strong> fco.javier.aceituno@gmail.com</p>
+            <h2>IdeupSimplePaginatorBundle</h2>
+            <p><a href="https://github.com/javiacei/IdeupSimplePaginatorBundle" target="_blanck">https://github.com/javiacei/IdeupSimplePaginatorBundle</a></p>
+            <h2>Presentación</h2>
+            <p><a href="https://github.com/javiacei/BundlesServicesAndTwigSlides" target="_blanck">https://github.com/javiacei/BundlesServicesAndTwigSlides</a></p>
+            <h2>Código ejemplo</h2>
+            <p><a href="https://github.com/javiacei/BundlesServicesAndTwig" target="_blanck">https://github.com/javiacei/BundlesServicesAndTwig</a></p>
+        </section>
+
+        <section class="slide" id="dudas">
+            <h1>¿Alguna duda?</h1>
+        </section>
+
+    </body>
+</html>
