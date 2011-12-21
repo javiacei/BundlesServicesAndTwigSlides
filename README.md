@@ -9,4 +9,5 @@ Código de ejemplo:
     https://github.com/javiacei/BundlesServicesAndTwig
 
 URL:
-    http://javiacei.github.com/BundlesServicesAndTwigSlides/
+
+    http://javiacei.github.com/BundlesServicesAndTwigSlides
