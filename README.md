@@ -7,3 +7,6 @@ TWIG de Symfony2.
 Código de ejemplo:
 
     https://github.com/javiacei/BundlesServicesAndTwig
+
+URL:
+    http://javiacei.github.com/BundlesServicesAndTwigSlides/
